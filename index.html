@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Вгадай мову програмування</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background-color: #eaf7ea; /* пастельно-зелений фон */
+      }
+      img {
+        max-width: 100%;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+      }
+      .question {
+        margin-bottom: 30px;
+      }
+      select {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        margin-top: 10px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        margin-top: 20px;
+        cursor: pointer;
+        background-color: #8ed48e;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #75bc75;
+      }
+      .result {
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-top: 30px;
+      }
+      .hint-box {
+        margin-top: 40px;
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+      }
+      .hint-output {
+        margin-top: 20px;
+        font-style: italic;
+        color: #444;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🧠 Вгадай мову програмування</h1>
+    <p>Оберіть мову програмування для кожного з фрагментів коду:</p>
+
+    <div class="question">
+      <h3>1️⃣ Код 1</h3>
+      <img src="code1.png" alt="Код 1" />
+      <select id="q1">
+        <option value="">Оберіть мову</option>
+        <option value="A">JavaScript</option>
+        <option value="B">C#</option>
+        <option value="C">Python</option>
+        <option value="D">C++</option>
+        <option value="E">MATLAB</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <h3>2️⃣ Код 2</h3>
+      <img src="code2.png" alt="Код 2" />
+      <select id="q2">
+        <option value="">Оберіть мову</option>
+        <option value="A">JavaScript</option>
+        <option value="B">C#</option>
+        <option value="C">Python</option>
+        <option value="D">C++</option>
+        <option value="E">MATLAB</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <h3>3️⃣ Код 3</h3>
+      <img src="code3.png" alt="Код 3" />
+      <select id="q3">
+        <option value="">Оберіть мову</option>
+        <option value="A">JavaScript</option>
+        <option value="B">C#</option>
+        <option value="C">Python</option>
+        <option value="D">C++</option>
+        <option value="E">MATLAB</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <h3>4️⃣ Код 4</h3>
+      <img src="code4.png" alt="Код 4" />
+      <select id="q4">
+        <option value="">Оберіть мову</option>
+        <option value="A">JavaScript</option>
+        <option value="B">C#</option>
+        <option value="C">Python</option>
+        <option value="D">C++</option>
+        <option value="E">MATLAB</option>
+      </select>
+    </div>
+
+    <div class="question">
+      <h3>5️⃣ Код 5</h3>
+      <img src="code5.png" alt="Код 5" />
+      <select id="q5">
+        <option value="">Оберіть мову</option>
+        <option value="A">JavaScript</option>
+        <option value="B">C#</option>
+        <option value="C">Python</option>
+        <option value="D">C++</option>
+        <option value="E">MATLAB</option>
+      </select>
+    </div>
+
+    <div class="hint-box">
+      <h3>💡 Отримати підказку</h3>
+      <select id="languageHint">
+        <option value="">Оберіть мову</option>
+        <option value="Python">Python</option>
+        <option value="C++">C++</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="MATLAB">MATLAB</option>
+        <option value="C#">C#</option>
+      </select>
+      <button onclick="showHint()">Показати підказку</button>
+      <div class="hint-output" id="hintOutput"></div>
+    </div>
+
+    <button onclick="checkAnswers()">Готово</button>
+    <div class="result" id="result"></div>
+
+    <script>
+      const correct = ["C", "D", "A", "E", "B"];
+      let hintCount = 0;
+      const maxHints = 2;
+
+      function checkAnswers() {
+        const answers = [
+          document.getElementById("q1").value,
+          document.getElementById("q2").value,
+          document.getElementById("q3").value,
+          document.getElementById("q4").value,
+          document.getElementById("q5").value,
+        ];
+
+        if (answers.includes("")) {
+          document.getElementById("result").innerText =
+            "⚠️ Будь ласка, оберіть мову для кожного питання.";
+          return;
+        }
+
+        let score = 0;
+        answers.forEach((ans, idx) => {
+          if (ans === correct[idx]) score++;
+        });
+
+        document.getElementById(
+          "result"
+        ).innerText = `✅ Правильних відповідей: ${score} з 5`;
+      }
+
+      function showHint() {
+        if (hintCount >= maxHints) {
+          document.getElementById("hintOutput").innerText =
+            "🔒 Ліміт підказок вичерпано (максимум 2).";
+          return;
+        }
+
+        const language = document.getElementById("languageHint").value;
+        const hints = {
+            "Python": "Python використовує відступи замість фігурних дужок. Немає крапок з комою. Простий синтаксис.",
+            "C++": "У C++ є #include і використовується cout для виводу. Завжди крапки з комою наприкінці рядків.",
+            "JavaScript": "JavaScript має console.log для виводу, let/const для змінних і працює в браузері.",
+            "MATLAB": "MATLAB використовує функцію fprintf або disp для виводу. Коментарі починаються з %.",
+            "C#": "У C# є using System, Console.WriteLine і структура схожа на Java."
+        };
+
+        if (language === "") {
+          document.getElementById("hintOutput").innerText =
+            "⛔ Обери мову, щоб побачити підказку.";
+          return;
+        }
+
+        hintCount++;
+        document.getElementById("hintOutput").innerText = hints[language];
+      }
+    </script>
+  </body>
+</html>
